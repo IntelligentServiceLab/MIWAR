@@ -19,4 +19,3 @@
 > This file is the model training file.
 5. data_process.py
 > This file contains the dataset loading code.
-6. In the 'bert' directory, we provide the BERT model and tokenizer we used.
