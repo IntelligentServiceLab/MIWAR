@@ -100,25 +100,6 @@ class TrnData(data.Dataset):
     def __getitem__(self, idx):
         return self.rows[idx], self.cols[idx], self.negs[idx]
 
-# def my_sampling(train_loader,mapping):
-#     uids_list = []
-#     pos_list = []
-#     neg_list = []
-#     l = 0
-#     for i,batch in enumerate(train_loader):
-#         l +=1
-#         uids,pos,neg = batch
-#         uids = uids.tolist()
-#         pos = pos.tolist()
-#         neg = neg.tolist()
-#         uids_list.extend(uids)
-#         pos_list.extend(pos)
-#         neg_list.extend(neg)
-#     uids_tensor = torch.tensor(uids_list)
-#     pos_tensor = torch.tensor(pos_list)
-#     neg_tensor = torch.tensor(neg_list)
-#     return uids_tensor, pos_tensor, neg_tensor,l
-
 def sampling(mashup_emb,pos_api_emb,neg_api_emb):
 
     positive_samples = torch.cat((mashup_emb, pos_api_emb), dim=1)
@@ -134,8 +115,6 @@ def sampling(mashup_emb,pos_api_emb,neg_api_emb):
     samples = torch.cat([positive_samples, negative_samples], dim=0)
     labels = torch.cat([positive_labels_tensor, negative_labels_tensor], dim=0)
     return samples, labels
-
-
 
 
 def CL_loss(view1, view2, temperature: float, b_cos: bool = True):
@@ -171,23 +150,3 @@ class MLP(nn.Module):
         x = self.seq(x)
         x.to(self.device)
         return x
-
-def get_my_minibatch(batch_size,train_mapping,api_desc_emb,mashup_desc_emb,data1,data2,mashup_num):
-    mashup_list = generate_unique_list(batch_size,mashup_num)
-    uids = []
-    poss = []
-    negs = []
-    for mashup_id in mashup_list:
-        api_list = train_mapping[mashup_id]
-        for api_id in api_list:
-            uids.append(mashup_id)
-            poss.append(api_id)
-            while True:
-                neg = random.randint(0,955)
-                if (mashup_id, neg) not in data1.dokmat and (mashup_id, neg) not in data2.dokmat:
-                    negs.append(neg)
-                    break
-    mashup_emb = mashup_desc_emb[uids]
-    pos_api_emb = api_desc_emb[poss]
-    neg_api_emb = api_desc_emb[negs]
-    return uids, poss, negs,mashup_emb,pos_api_emb,neg_api_emb
