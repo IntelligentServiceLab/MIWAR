@@ -20,4 +20,4 @@
 5. data_process.py
 > This file contains the dataset loading code.
 ### Data
-data is available in [here](链接：https://pan.baidu.com/s/19MTfDANazvJfVTUFN9WUpw?pwd=tpdy 提取码：tpdy)
+data is available in [here](https://pan.baidu.com/s/19MTfDANazvJfVTUFN9WUpw?pwd=tpdy)
