@@ -19,5 +19,4 @@
 > This file is the model training file.
 5. data_process.py
 > This file contains the dataset loading code.
-### Data
-data is available in [here](https://pan.baidu.com/s/19MTfDANazvJfVTUFN9WUpw?pwd=tpdy)
+6. Comparison models are stored in the 'Comparison Models' folder.
