@@ -1,4 +1,4 @@
-## MIWAR:Multi-Task Learning for Interactive Web API Recommendation via Exploring Mashup-API Interactions and Functional Description Documents
+## MIWAR: Multi-Task Learning for Interactive Web API Recommendation via Exploring Mashup-API Interactions and Functional Description Documents
 ### Environment Requirment
 > This code has been tested running undeer Python 3.9.0
 > The Required packages are as follows:
