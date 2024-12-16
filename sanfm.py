@@ -188,7 +188,56 @@ def ndcg_at_k(predicted_scores, true_scores, k):
     return dcg / idcg if idcg > 0 else 0.0
 
 
+def top_k(batch_size,model, mashup_desc_emb, api_desc_emb, k, mashup_num, api_num, train_mapping, test_mapping, sanfm):
+    result = generate_unique_list(batch_size, mashup_num)
+    recall_k = 0
+    ndcg_k = 0
+    precision = 0
+    map = 0
+    print(result)
+    for u_id in result:
+        samples = []
+        mashup_desc_e = model.process_input(mashup_desc_emb[u_id], "mashup")
+        mashup_stru_e = model.E_u[u_id]
 
+        mashup_emb = mashup_desc_e + mashup_stru_e
+        # mashup_emb = torch.cat((mashup_desc_e, mashup_stru_e), dim=0)
+        for i_id in range(api_num):
+            api_desc_e = model.process_input(api_desc_emb[i_id], "api")
+            api_stru_e = model.E_i[i_id]
+            api_emb = api_desc_e + api_stru_e
+            # api_emb = torch.cat((api_desc_e, api_stru_e), dim=0)
+            samples.append(torch.cat((mashup_emb, api_emb), dim=0))
+
+        samples = torch.stack(samples)
+        pred = sanfm(samples)
+        pred = pred.to(torch.float32)
+        real_api = train_mapping[u_id]
+        final_api = test_mapping[u_id]
+        pred[real_api] = 1e-18
+        topk_values, topk_indices = torch.topk(pred, k)
+        predd = topk_indices.tolist()
+        predd.sort()
+        print(predd)
+        recommended_scores = topk_values.tolist()
+        ground_truth_scores = []  # 理想相关性得分
+        hit = 0
+        num = 0
+        ap = 0
+        for pre_api in topk_indices:
+            num += 1
+            if pre_api in final_api:
+                hit += 1
+                ap += hit/num
+                ground_truth_scores.append(1)
+            else :
+                ground_truth_scores.append(0)
+        ap = ap /len(final_api)
+        map+=ap
+        recall_k += hit/len(final_api)
+        ndcg_k += ndcg_at_k(recommended_scores, ground_truth_scores, k)
+        precision += hit/k
+    return recall_k/batch_size, ndcg_k/batch_size,precision/batch_size,map/batch_size
 
 
 
