@@ -2,12 +2,12 @@
 ### Environment Requirment
 > This code has been tested running undeer Python 3.9.0
 > The Required packages are as follows:
-> torch==2.0.0+cu118
-> pandas==1.3.3
-> numpy==1.22.4
-> transformers==4.10.3
-> scikit-learn==1.3.2
-> scipy==1.9.1
+>- torch==2.0.0+cu118
+>- pandas==1.3.3
+>- numpy==1.22.4
+>- transformers==4.10.3
+>- scikit-learn==1.3.2
+>- scipy==1.9.1
 ### File Introduction
 1. model.py
 > This file contains the code of LightGCL.
