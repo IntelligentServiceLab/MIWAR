@@ -1,0 +1,103 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 假设的数据
+ds1 = [16, 32, 64, 128, 256]
+recall1 = [0.48307, 0.51379, 0.54388, 0.46094, 0.44375]
+ndcg1 = [0.33046, 0.35056, 0.37033, 0.34238, 0.29463]
+precision1 = [0.04938, 0.05297, 0.055468, 0.0468, 0.04365]
+f1_score1 = [2 * recall1[i] * precision1[i] / (recall1[i] + precision1[i]) for i in range(len(ds1))]
+
+ds2 = [16, 32, 64, 128, 256]
+recall2 = [0.50443, 0.52839, 0.54388, 0.52148, 0.51719]
+ndcg2 = [0.34608, 0.36672, 0.37033, 0.35254,0.35445]
+precision2 = [0.05141, 0.05391, 0.05547, 0.05328, 0.05313]
+f1_score2 = [2 * recall2[i] * precision2[i] / (recall2[i] + precision2[i]) for i in range(len(ds2))]
+
+ds3 = [16, 32, 64, 128, 256]
+recall3 = [0.48338, 0.50677, 0.52198, 0.54388, 0.51563]
+ndcg3 = [0.30558, 0.35307, 0.35766, 0.37033, 0.34969]
+precision3 = [0.04641, 0.05141, 0.05319, 0.05547, 0.05156]
+f1_score3 = [2 * recall3[i] * precision3[i] / (recall3[i] + precision3[i]) for i in range(len(ds3))]
+
+ds4 = [1, 2, 3, 4, 5]
+recall4 = [0.50365, 0.54388, 0.50479, 0.46354, 0.44227]
+ndcg4 = [0.34512, 0.37033, 0.32326, 0.29008, 0.29685]
+precision4 = [0.05125, 0.055468, 0.05346, 0.04844, 0.04531]
+f1_score4 = [2 * recall4[i] * precision4[i] / (recall4[i] + precision4[i]) for i in range(len(ds4))]
+
+# 创建图形和四个子图
+fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+plt.rcParams['font.family'] = 'Times New Roman'
+plt.subplots_adjust( wspace=0.3 ,hspace=0.3)
+# 第一个子图
+axes[0, 0].plot(np.linspace(0, 1, len(ds1)), precision1, 'g-', marker='o', label='Precision')
+axes[0, 0].plot(np.linspace(0, 1, len(ds1)), recall1, 'c-', marker='s', label='Recall')
+axes[0, 0].plot(np.linspace(0, 1, len(ds1)), f1_score1, 'r-', marker='d', label='F1 Score')
+axes[0, 0].plot(np.linspace(0, 1, len(ds1)), ndcg1, 'b-', marker='x', label='NDCG')
+axes[0, 0].set_xticks(np.linspace(0, 1, len(ds1)))
+axes[0, 0].set_xticklabels([str(x) for x in ds1])
+axes[0, 0].set_ylim(0, 0.6)
+axes[0, 0].legend(loc='upper left')
+# axes[0, 0].set_ylabel('Precision/Recall/NDCG/F1',fontsize=13)
+# axes[0, 0].set_xlabel('embedding size of LightGCL\n(a)The impact of embedding size in LightGCL', fontsize=12)
+axes[0, 0].text(0.5, -0.13, 'Embedding size of LightGCL', ha='center', va='bottom', fontsize=13, transform=axes[0, 0].transAxes)
+# 设置第二行文本（较小字体）
+axes[0, 0].text(0.5, -0.14, '(a) The impact of embedding size in LightGCL', ha='center', va='top', fontsize=15, transform=axes[0, 0].transAxes)
+axes[0, 0].grid(True)
+
+# 第二个子图
+axes[0, 1].plot(np.linspace(0, 1, len(ds2)), precision2, 'g-', marker='o', label='Precision')
+axes[0, 1].plot(np.linspace(0, 1, len(ds2)), recall2, 'c-', marker='s', label='Recall')
+axes[0, 1].plot(np.linspace(0, 1, len(ds2)), f1_score2, 'r-', marker='d', label='F1 Score')
+axes[0, 1].plot(np.linspace(0, 1, len(ds2)), ndcg2, 'b-', marker='x', label='NDCG')
+axes[0, 1].set_xticks(np.linspace(0, 1, len(ds2)))
+axes[0, 1].set_xticklabels([str(x) for x in ds2])
+axes[0, 1].set_ylim(0, 0.6)
+axes[0, 1].legend(loc='upper left')
+# axes[0, 1].set_ylabel('Precision/Recall/NDCG/F1',fontsize=13)
+# axes[0, 1].set_xlabel('Self-attention size of SANFM\n(b)The impact of self-attention size in SANFM', fontsize=12)
+axes[0, 1].text(0.5, -0.13, 'Self-attention size of SANFM', ha='center', va='bottom', fontsize=13, transform=axes[0, 1].transAxes)
+# 设置第二行文本（较小字体）
+axes[0, 1].text(0.5, -0.14, '(b) The impact of self-attention size in SANFM', ha='center', va='top', fontsize=15, transform=axes[0, 1].transAxes)
+axes[0, 1].grid(True)
+
+# 第三个子图
+axes[1, 0].plot(np.linspace(0, 1, len(ds3)), precision3, 'g-', marker='o', label='Precision')
+axes[1, 0].plot(np.linspace(0, 1, len(ds3)), recall3, 'c-', marker='s', label='Recall')
+axes[1, 0].plot(np.linspace(0, 1, len(ds3)), f1_score3, 'r-', marker='d', label='F1 Score')
+axes[1, 0].plot(np.linspace(0, 1, len(ds3)), ndcg3, 'b-', marker='x', label='NDCG')
+axes[1, 0].set_xticks(np.linspace(0, 1, len(ds3)))
+axes[1, 0].set_xticklabels([str(x) for x in ds3])
+axes[1, 0].set_ylim(0, 0.6)
+axes[1, 0].legend(loc='upper left')
+# axes[1, 0].set_ylabel('Precision/Recall/NDCG/F1',fontsize=13)
+# axes[1, 0].set_xlabel('Embedding size of SANFM\n(c)The impact of embedding size in SANFM', fontsize=12)
+axes[1, 0].text(0.5, -0.13, 'Embedding size of SANFM', ha='center', va='bottom', fontsize=13, transform=axes[1, 0].transAxes)
+# 设置第二行文本（较小字体）
+axes[1, 0].text(0.5, -0.14, '(c) The impact of embedding size in SANFM', ha='center', va='top', fontsize=15, transform=axes[1, 0].transAxes)
+axes[1, 0].grid(True)
+
+# 第四个子图
+axes[1, 1].plot(np.linspace(0, 1, len(ds4)), precision4, 'g-', marker='o', label='Precision')
+axes[1, 1].plot(np.linspace(0, 1, len(ds4)), recall4, 'c-', marker='s', label='Recall')
+axes[1, 1].plot(np.linspace(0, 1, len(ds4)), f1_score4, 'r-', marker='d', label='F1 Score')
+axes[1, 1].plot(np.linspace(0, 1, len(ds4)), ndcg4, 'b-', marker='x', label='NDCG')
+axes[1, 1].set_xticks(np.linspace(0, 1, len(ds4)))
+axes[1, 1].set_xticklabels([str(x) for x in ds4])
+axes[1, 1].set_ylim(0, 0.6)
+axes[1, 1].legend(loc='upper left')
+# axes[1, 1].set_ylabel('Precision/Recall/NDCG/F1',fontsize=13)
+axes[1, 1].text(0.5, -0.13, 'Hidden layer size of SANFM', ha='center', va='bottom', fontsize=13, transform=axes[1, 1].transAxes)
+
+# 设置第二行文本（较小字体）
+axes[1, 1].text(0.5, -0.14, '(d) The impact of hidden layer size in SANFM', ha='center', va='top', fontsize=15, transform=axes[1, 1].transAxes)
+
+axes[1, 1].grid(True)
+
+# 自动调整子图布局
+# plt.tight_layout() #设置默认的间距
+plt.savefig('efficiency.png', dpi=1000,bbox_inches='tight') #指定分辨率保存
+plt.show()
+
+# 显示图形
